@@ -60,7 +60,15 @@ impl<T> SlowVec<T> {
 
     // Student 1: Provide your solution here.
     pub fn push(&mut self, t: T) {
-        todo!("Student 1 should implement this");
+        let old_len = self.fixed.len();
+        let mut tmp = FixedSizeArray::allocate(old_len + 1);
+
+        for i in 0..old_len {
+            tmp.put(self.fixed.move_out(i), i);
+        }
+
+        tmp.put(t, old_len);
+        self.fixed = tmp;
     }
 
     // Student 2: Provide your solution here
