@@ -1,19 +1,12 @@
-use std::{ops::Index, time::Instant};
+git use std::{ops::Index, time::Instant};
 
 fn mid_by_pointer(v: *const Vec<i32>) -> i32 {
     unsafe {
-        // These comments are extra information if you want to know why we write it like this.
+        let length = (*v).len();
 
-        // * dereference the raw pointer *const Vec<i32> -> Vec<i32>. 
-        // & take the reference of Vec<i32> -> &Vec<i32>
+        let vec_ref = &*v;
 
-        // Note that rust will auto-deref (*v).len() to (&*v).len()
-        let length = (*v).len(); // equivalent to (&*v).len()
-
-        // But this is NOT allowed:
-        return (*v)[length / 2];
-        // because (*v)[length / 2] is actually (*v).index(length / 2)
-        // and index() is a "trait" which Rust will not auto-deref for you
+        return vec_ref[length / 2];
     }
 }
 
